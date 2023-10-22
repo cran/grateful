@@ -1,3 +1,22 @@
+
+# grateful 0.2.4
+
+* Fixed a bug in package doc (cf. https://github.com/r-lib/roxygen2/issues/1491).
+
+# grateful 0.2.3
+
+* Fixed a bug when downloading 'dependent' citation styles from the official repository.
+
+
+# grateful 0.2.2
+
+* Removed some tests that were likely to fail in the future (issue #36)
+
+# grateful 0.2.1
+
+* Citation paragraph can now be written in passive voice, thanks to @jmclawson
+
+
 # grateful 0.2.0
 
 * Added `omit` argument to exclude some packages from the citation report. 

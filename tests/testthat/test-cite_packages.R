@@ -53,12 +53,39 @@ test_that("cite_packages returns correct paragraph", {
                              class = "knit_asis",
                              knit_cacheable = NA))
 
+  ### passive voice
+
+  para <- cite_packages(output = "paragraph",
+                        pkgs = c("grateful"),
+                        out.dir = tempdir(),
+                        passive.voice = TRUE)
+
+  expect_identical(para,
+                   structure(paste0("This work was completed with the following R packages: grateful v. ",
+                                    utils::packageVersion("grateful"), " [@grateful]."),
+                             class = "knit_asis",
+                             knit_cacheable = NA))
+
+  para <- cite_packages(output = "paragraph",
+                        pkgs = "Session",
+                        out.dir = tempdir(),
+                        passive.voice = TRUE)
+
+  expect_identical(para,
+                   structure(paste0("This work was completed using R version ",
+                                    R.version$major, ".", R.version$minor,
+                                    " [@base] with the following R packages: testthat v. ",
+                                    utils::packageVersion("testthat"), " [@testthat]."),
+                             class = "knit_asis",
+                             knit_cacheable = NA))
+
 })
 
 
 test_that("cite_packages returns correct Rmd", {
 
   skip_on_cran()
+  skip_on_ci()
 
   cite <- cite_packages(
     output = "file",
@@ -82,7 +109,12 @@ test_that("cite_packages returns correct Rmd", {
                  "",
                  "|Package  |Version |Citation  |",
                  "|:--------|:-------|:---------|",
-                 paste0("|grateful |", utils::packageVersion("grateful"),"   |@grateful |"),
+                 paste0("|grateful |",
+                        utils::packageVersion("grateful"),
+                        paste0(rep(" ",
+                                   times = 8 - nchar(as.character(utils::packageVersion("grateful")))),
+                               collapse = ""),
+                        "|@grateful |"),
                  "",
                  "**You can paste this paragraph directly in your report:**",
                  "",

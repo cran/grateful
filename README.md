@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![](https://www.r-pkg.org/badges/version/grateful)](https://cran.r-project.org/package=grateful)
+![](https://img.shields.io/github/r-package/v/Pakillo/grateful)
 [![R-CMD-check](https://github.com/Pakillo/grateful/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/grateful/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/Pakillo/grateful/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Pakillo/grateful?branch=master)
@@ -12,8 +14,7 @@ coverage](https://codecov.io/gh/Pakillo/grateful/branch/master/graph/badge.svg)]
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-<!-- [![](https://www.r-pkg.org/badges/version/grateful)](https://cran.r-project.org/package=grateful) -->
-<!-- [![](http://cranlogs.r-pkg.org/badges/grand-total/grateful)](https://cran.r-project.org/package=grateful) -->
+[![](https://cranlogs.r-pkg.org/badges/grand-total/grateful)](https://cran.r-project.org/package=grateful)
 <!-- badges: end -->
 
 The goal of **grateful** is to make it very easy to cite R and the R
@@ -143,7 +144,7 @@ citations, using `output = 'table'`:
     knitr::kable(pkgs)
     ```
 
-<img src="man/figures/table.png" width="814" />
+<img src="man/figures/table.png" width="842" />
 
 If you want the references to appear in a particular format, you can
 specify the citation style in the YAML header:
@@ -168,13 +169,13 @@ Use `scan_packages`
 scan_packages()
          pkg version
 1     badger   0.2.3
-2       base   4.2.3
-3      knitr    1.42
+2       base   4.3.1
+3      knitr    1.44
 4    pkgdown   2.0.7
-5    remotes   2.4.2
-6       renv  0.17.3
-7  rmarkdown    2.21
-8   testthat   3.1.7
+5    remotes 2.4.2.1
+6       renv   1.0.3
+7  rmarkdown    2.25
+8   testthat   3.2.0
 9  tidyverse   2.0.0
 10    visreg   2.7.0
 ```
@@ -192,8 +193,8 @@ If you want to get the BibTeX references for a few specific packages:
 ``` r
 get_pkgs_info(pkgs = c("remotes", "renv"), out.dir = getwd())
 #>       pkg version citekeys
-#> 1 remotes   2.4.2  remotes
-#> 2    renv  0.17.3     renv
+#> 1 remotes 2.4.2.1  remotes
+#> 2    renv   1.0.3     renv
 ```
 
 ### Using grateful with the tidyverse
@@ -313,20 +314,19 @@ you still use and want to cite that package, install it, and then run
 
 ``` r
 citation("grateful")
-
 To cite package 'grateful' in publications use:
 
-  Rodriguez-Sanchez F, Jackson CP, Hutchins SD (2023) grateful:
-  Facilitate citation of R packages.
-  https://github.com/Pakillo/grateful
+  Francisco Rodriguez-Sanchez, Connor P. Jackson (2023). _grateful:
+  Facilitate citation of R packages_.
+  <https://pakillo.github.io/grateful/>.
 
 A BibTeX entry for LaTeX users is
 
   @Manual{,
     title = {grateful: Facilitate citation of R packages},
-    author = {{Francisco Rodríguez-Sánchez} and {Connor P. Jackson} and {Shaurita D. Hutchins}},
+    author = {{Francisco Rodriguez-Sanchez} and {Connor P. Jackson}},
     year = {2023},
-    url = {https://github.com/Pakillo/grateful},
+    url = {https://pakillo.github.io/grateful/},
   }
 ```
 

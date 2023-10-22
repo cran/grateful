@@ -1,6 +1,6 @@
 Package: grateful
 Title: Facilitate Citation of R Packages
-Version: 0.2.0
+Version: 0.2.4
 Authors@R: c(
     person("Francisco", "Rodriguez-Sanchez", 
             email = "f.rodriguez.sanc@gmail.com", 
@@ -8,7 +8,8 @@ Authors@R: c(
             comment = c(ORCID = "0000-0002-7981-1599")),
     person("Connor P.", "Jackson", email = "connor@cpjackson.net", role = "aut",
            comment = c(ORCID = "0000-0002-4220-5210")),
-    person("Shaurita D.", "Hutchins", role = "ctb")
+    person("Shaurita D.", "Hutchins", role = "ctb"),
+    person("James M.", "Clawson", role = "ctb")
   )
 Description: Facilitates the citation of R packages used in analysis
     projects. Scans project for packages used, gets their citations, and
@@ -25,11 +26,12 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-04-24 08:33:06 UTC; frs
+Packaged: 2023-10-22 16:22:57 UTC; frs
 Author: Francisco Rodriguez-Sanchez [aut, cre, cph]
     (<https://orcid.org/0000-0002-7981-1599>),
   Connor P. Jackson [aut] (<https://orcid.org/0000-0002-4220-5210>),
-  Shaurita D. Hutchins [ctb]
+  Shaurita D. Hutchins [ctb],
+  James M. Clawson [ctb]
 Maintainer: Francisco Rodriguez-Sanchez <f.rodriguez.sanc@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-04-24 10:00:02 UTC
+Date/Publication: 2023-10-22 16:40:02 UTC
