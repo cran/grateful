@@ -7,6 +7,7 @@
 
 [![](https://www.r-pkg.org/badges/version/grateful)](https://cran.r-project.org/package=grateful)
 ![](https://img.shields.io/github/r-package/v/Pakillo/grateful)
+<a href="https://diffify.com/R/grateful" target="_blank"><img src="https://diffify.com/diffify-badge.svg" alt="The diffify page for the R package grateful" style="width: 100px; max-width: 100%;"></a>
 [![R-CMD-check](https://github.com/Pakillo/grateful/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/grateful/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/Pakillo/grateful/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Pakillo/grateful?branch=master)
@@ -15,7 +16,10 @@ coverage](https://codecov.io/gh/Pakillo/grateful/branch/master/graph/badge.svg)]
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/grateful)](https://cran.r-project.org/package=grateful)
-<!-- badges: end -->
+<!-- 
+[![HitCount since 2024-06-05](https://hits.dwyl.com/Pakillo/grateful.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/grateful)
+[![HitCount since 2024-06-05](https://hits.dwyl.com/Pakillo/grateful.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/grateful)
+--> <!-- badges: end -->
 
 The goal of **grateful** is to make it very easy to cite R and the R
 packages used in any analyses, so that package authors receive their
@@ -24,9 +28,9 @@ the project for R packages used and generate a BibTeX file containing
 all citations for those packages.
 
 **grateful** can then generate a new document with citations in the
-desired output format (Word, PDF, HTML, Markdown). These references can
-be formatted for a specific journal, so that we can just paste them
-directly into our manuscript or report.
+desired output format (Word, PDF, LaTeX, HTML, Markdown). These
+references can be formatted for a specific journal, so that we can just
+paste them directly into our manuscript or report.
 
 Alternatively, we can use **grateful** directly within an
 [Rmarkdown](https://rmarkdown.rstudio.com/) or
@@ -84,8 +88,8 @@ cite_packages(out.dir = ".")            # save report to working directory
 
 <br>
 
-This document can also be a Word document, PDF file, markdown file, or
-left as the source Rmarkdown file using `out.format`:
+This document can also be a Word or LaTeX document, PDF file, markdown
+file, or left as the source Rmarkdown file using `out.format`:
 
 ``` r
 cite_packages(out.format = "docx", out.dir = ".")
@@ -168,14 +172,14 @@ Use `scan_packages`
 ``` r
 scan_packages()
          pkg version
-1     badger   0.2.3
-2       base   4.3.1
-3      knitr    1.44
-4    pkgdown   2.0.7
-5    remotes 2.4.2.1
-6       renv   1.0.3
-7  rmarkdown    2.25
-8   testthat   3.2.0
+1     badger   0.2.4
+2       base   4.4.1
+3      knitr    1.48
+4    pkgdown   2.1.0
+5    remotes   2.5.0
+6       renv   1.0.7
+7  rmarkdown    2.28
+8   testthat 3.2.1.1
 9  tidyverse   2.0.0
 10    visreg   2.7.0
 ```
@@ -193,8 +197,8 @@ If you want to get the BibTeX references for a few specific packages:
 ``` r
 get_pkgs_info(pkgs = c("remotes", "renv"), out.dir = getwd())
 #>       pkg version citekeys
-#> 1 remotes 2.4.2.1  remotes
-#> 2    renv   1.0.3     renv
+#> 1 remotes   2.5.0  remotes
+#> 2    renv   1.0.7     renv
 ```
 
 ### Using grateful with the tidyverse
@@ -304,11 +308,23 @@ for unused packages before citing them.
 If getting an error like “Error in (function (pkg, lib.loc = NULL):
 there is no package called…”, that means that some of your scripts is
 loading a package that is no longer available in your computer, so
-{grateful} cannot grab its citation. To fix this, try checking if that
-package is still needed for your project and you want to cite it,
-otherwise remove or comment that line where the package is loaded. If
-you still use and want to cite that package, install it, and then run
-`cite_packages` again.
+{grateful} cannot grab its citation. To fix this, there are several
+options. First, you could omit that package (or those packages, if more
+than one) from {grateful} citations using
+`cite_packages(omit = c("package1", "package2")`. Alternatively, try
+checking if that package is still needed for your project and you want
+to cite it, otherwise remove or comment that line where the package is
+loaded. If you still use and want to cite that package, install it, and
+then run `cite_packages` again.
+
+### Projects with large number of packages or files
+
+When a project includes many used packages (or files), `renv` may issue
+a warning. Use `options(renv.config.dependencies.limit = 10000)` to
+overcome the warning and scan the project for all packages used.
+Alternatively, use `.renvignore` to ignore certain files or folders (see
+`renv`
+[help](https://rstudio.github.io/renv/reference/dependencies.html#ignoring-files)).
 
 ### Citing ‘grateful’
 
@@ -316,15 +332,14 @@ you still use and want to cite that package, install it, and then run
 citation("grateful")
 To cite package 'grateful' in publications use:
 
-  Francisco Rodriguez-Sanchez, Connor P. Jackson (2023). _grateful:
-  Facilitate citation of R packages_.
-  <https://pakillo.github.io/grateful/>.
+  Rodriguez-Sanchez F, Jackson C (2023). _grateful: Facilitate citation
+  of R packages_. <https://pakillo.github.io/grateful/>.
 
 A BibTeX entry for LaTeX users is
 
   @Manual{,
     title = {grateful: Facilitate citation of R packages},
-    author = {{Francisco Rodriguez-Sanchez} and {Connor P. Jackson}},
+    author = {Francisco Rodriguez-Sanchez and Connor P. Jackson},
     year = {2023},
     url = {https://pakillo.github.io/grateful/},
   }

@@ -1,3 +1,26 @@
+# grateful 0.2.10
+
+* Add support for LaTeX output (thanks @patrick-weiss for the suggestion). Use `out.format = "tex-document"` to obtain a full LaTeX document, or `out.format = "tex-fragment"` to produce just a fragment citing packages to be copied into another existing LaTeX document.
+
+# grateful 0.2.9
+
+* Match package names with citation keys explicitly, rather than relying on sorting.
+
+# grateful 0.2.8
+
+* Fix problem with citation keys containing non-alphanumeric characters (-) (issue #44, thanks @jkylearmstrong).
+
+# grateful 0.2.7
+
+* Enable citing Rstudio with 'table' output format (issue #41).
+
+# grateful 0.2.6
+
+* Explain how to cite R together with a given list of packages (issue #37).
+
+# grateful 0.2.5
+
+* Fixed a bug in writing passive voice paragraph when generating a citation report (issue #39).
 
 # grateful 0.2.4
 

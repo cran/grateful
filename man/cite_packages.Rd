@@ -7,7 +7,7 @@
 cite_packages(
   output = c("file", "paragraph", "table", "citekeys"),
   out.dir = NULL,
-  out.format = c("html", "docx", "pdf", "Rmd", "md"),
+  out.format = c("html", "docx", "pdf", "Rmd", "md", "tex-fragment", "tex-document"),
   citation.style = NULL,
   pkgs = "All",
   omit = c("grateful"),
@@ -39,7 +39,9 @@ In all cases, a BibTeX file with package references is saved on disk
 the references. It is recommended to set \code{out.dir = getwd()}.}
 
 \item{out.format}{Output format when \code{output = "file"}:
-either "html" (the default), "docx" (Word), "pdf", "Rmd", or "md" (markdown).
+either "html" (the default), "docx" (Word), "pdf",
+"tex-fragment" (LaTeX fragment to be inserted into another LaTeX document),
+"tex-document" (full LaTeX document), "Rmd", or "md" (markdown).
 (Note that choosing "pdf" requires a working installation of LaTeX,
 see \url{https://yihui.org/tinytex/}).}
 
@@ -59,7 +61,8 @@ should instead be defined in the YAML metadata of the document
 within the project/folder (the default), or "Session" to include only packages
 used in the current session.
 Alternatively, \code{pkgs} can also be a character vector of package names to
-get citations for (see examples).}
+get citations for. To cite R as well as the given packages,
+include "base" in \code{pkgs} (see examples).}
 
 \item{omit}{Character vector of package names to be omitted from the citation
 report. \code{grateful} is omitted by default. Use \code{omit = NULL} to include all
@@ -158,6 +161,9 @@ cite_packages(pkgs = "Session", out.dir = tempdir())
 
 # Cite only user-provided packages:
 cite_packages(pkgs = c("renv", "remotes", "knitr"), out.dir = tempdir())
+
+# Cite R as well as user-provided packages
+cite_packages(pkgs = c("base", "renv", "remotes", "knitr"), out.dir = tempdir())
 
 
 # To include citations in an R Markdown or Quarto file

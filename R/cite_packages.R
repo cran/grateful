@@ -64,7 +64,9 @@
 #'   the references. It is recommended to set `out.dir = getwd()`.
 #'
 #' @param out.format Output format when `output = "file"`:
-#' either "html" (the default), "docx" (Word), "pdf", "Rmd", or "md" (markdown).
+#' either "html" (the default), "docx" (Word), "pdf",
+#' "tex-fragment" (LaTeX fragment to be inserted into another LaTeX document),
+#' "tex-document" (full LaTeX document), "Rmd", or "md" (markdown).
 #' (Note that choosing "pdf" requires a working installation of LaTeX,
 #' see <https://yihui.org/tinytex/>).
 #'
@@ -84,7 +86,8 @@
 #' within the project/folder (the default), or "Session" to include only packages
 #' used in the current session.
 #' Alternatively, `pkgs` can also be a character vector of package names to
-#' get citations for (see examples).
+#' get citations for. To cite R as well as the given packages,
+#' include "base" in `pkgs` (see examples).
 #'
 #' @param omit Character vector of package names to be omitted from the citation
 #' report. `grateful` is omitted by default. Use `omit = NULL` to include all
@@ -100,7 +103,7 @@
 #' @param include.RStudio Logical. If `TRUE`, adds a citation for the
 #'   current version of RStudio.
 #'
-#' @param passive.voice Logical. If `TRUE`, uses passive voice in any paragraph  
+#' @param passive.voice Logical. If `TRUE`, uses passive voice in any paragraph
 #'   generated for citations.
 #'
 #' @param out.file Desired name of the citation report to be created if
@@ -138,6 +141,9 @@
 #' # Cite only user-provided packages:
 #' cite_packages(pkgs = c("renv", "remotes", "knitr"), out.dir = tempdir())
 #'
+#' # Cite R as well as user-provided packages
+#' cite_packages(pkgs = c("base", "renv", "remotes", "knitr"), out.dir = tempdir())
+#'
 #'
 #' # To include citations in an R Markdown or Quarto file
 #'
@@ -154,7 +160,8 @@
 
 cite_packages <- function(output = c("file", "paragraph", "table", "citekeys"),
                           out.dir = NULL,
-                          out.format = c("html", "docx", "pdf", "Rmd", "md"),
+                          out.format = c("html", "docx", "pdf", "Rmd", "md",
+                                         "tex-fragment", "tex-document"),
                           citation.style = NULL,
                           pkgs = "All",
                           omit = c("grateful"),
@@ -197,7 +204,8 @@ cite_packages <- function(output = c("file", "paragraph", "table", "citekeys"),
                       Rmd.file = out.file,
                       out.dir = out.dir,
                       out.format = out.format,
-                      include.RStudio = include.RStudio)
+                      include.RStudio = include.RStudio,
+                      passive.voice = passive.voice)
 
     message(paste0("\nCitation report available at ", rmd))
     return(rmd)  # return path to file
@@ -216,12 +224,12 @@ cite_packages <- function(output = c("file", "paragraph", "table", "citekeys"),
 
 
   if (output == "table") {
-    return(output_table(pkgs.df))
+    return(output_table(pkgs.df, include.RStudio = include.RStudio))
   }
 
 
   if (output == "citekeys") {
-    return(unlist(pkgs.df$citekeys))
+    return(unname(unlist(pkgs.df$citekeys)))
   }
 
 }
