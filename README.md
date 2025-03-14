@@ -41,10 +41,17 @@ included in the reference list when rendering.
 
 ## Installation
 
-You can install {grateful} from CRAN:
+You can install the stable release of {grateful} from CRAN:
 
 ``` r
 install.packages("grateful")
+```
+
+Or the latest development version from
+[R-universe](https://pakillo.r-universe.dev/grateful):
+
+``` r
+install.packages("grateful", repos = c("https://pakillo.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 Or from GitHub:
@@ -173,15 +180,16 @@ Use `scan_packages`
 scan_packages()
          pkg version
 1     badger   0.2.4
-2       base   4.4.1
-3      knitr    1.48
-4    pkgdown   2.1.0
-5    remotes   2.5.0
-6       renv   1.0.7
-7  rmarkdown    2.28
-8   testthat 3.2.1.1
-9  tidyverse   2.0.0
-10    visreg   2.7.0
+2       base   4.4.3
+3      knitr    1.49
+4       mgcv   1.9.1
+5    pkgdown   2.1.1
+6    remotes   2.5.0
+7       renv   1.1.2
+8  rmarkdown    2.29
+9   testthat   3.2.3
+10 tidyverse   2.0.0
+11    visreg   2.7.0
 ```
 
 ### Producing a BibTeX file with package references
@@ -198,7 +206,7 @@ If you want to get the BibTeX references for a few specific packages:
 get_pkgs_info(pkgs = c("remotes", "renv"), out.dir = getwd())
 #>       pkg version citekeys
 #> 1 remotes   2.5.0  remotes
-#> 2    renv   1.0.7     renv
+#> 2    renv   1.1.2     renv
 ```
 
 ### Using grateful with the tidyverse
@@ -296,9 +304,45 @@ research/analysis performed, I think it is good idea to record the
 entire computational environment elsewhere, e.g. using `sessionInfo()`
 or `sessioninfo::session_info()`.
 
+### Some packages include several citations
+
+Some packages include more than one citation
+(e.g. [knitr](https://cran.r-project.org/package=knitr/citation.html),
+[mgcv](https://cran.r-project.org/package=knitr/citation.html)).
+`grateful` will include all those citations by default, as it is
+impossible to decide automatically which citations should be included in
+each case. The user may manually remove citations from the produced
+reference list after calling `cite_packages`. If using Quarto or
+Rmarkdown, we can generate the citation paragraph and manually remove
+the unwanted references so they will not appear cited.
+
+For example, `mgcv` package provides multiple references to be cited:
+
+``` r
+citation("mgcv")
+```
+
+To choose just one of them to be cited, we could generate a citation
+paragraph using `cite_packages`
+
+``` r
+cite_packages("paragraph", out.dir = ".")
+```
+
+![](man/figures/paragraph.png)
+
+And then manually remove the unwanted citation keys, leaving just those
+we want to cite:
+
+![](man/figures/paragraph_edited.png)
+
+When rendering the Rmarkdown or Quarto document, only the chosen
+references will be cited.
+
 ### Removing unused packages
 
 Before running `grateful` you might want to run
+[`lintr::unused_import_linter`](https://lintr.r-lib.org/reference/unused_import_linter.html),
 [`funchir::stale_package_check`](https://cran.r-project.org/package=funchir)
 or [annotater](https://cran.r-project.org/package=annotater) to check
 for unused packages before citing them.
@@ -311,11 +355,15 @@ loading a package that is no longer available in your computer, so
 {grateful} cannot grab its citation. To fix this, there are several
 options. First, you could omit that package (or those packages, if more
 than one) from {grateful} citations using
-`cite_packages(omit = c("package1", "package2")`. Alternatively, try
-checking if that package is still needed for your project and you want
-to cite it, otherwise remove or comment that line where the package is
-loaded. If you still use and want to cite that package, install it, and
-then run `cite_packages` again.
+`cite_packages(omit = c("package1", "package2")`. Or you could set a
+`.renvignore` file to ignore particular files or folders (see
+instructions
+[here](https://rstudio.github.io/renv/reference/dependencies.html#ignoring-files)).
+Alternatively, try [checking if that package is still
+needed](https://pakillo.github.io/grateful/index.html#removing-unused-packages)
+for your project and you want to cite it; otherwise remove or comment
+that line where the package is loaded. If you still use and want to cite
+that package, install it, and then run `cite_packages` again.
 
 ### Projects with large number of packages or files
 
@@ -326,21 +374,32 @@ Alternatively, use `.renvignore` to ignore certain files or folders (see
 `renv`
 [help](https://rstudio.github.io/renv/reference/dependencies.html#ignoring-files)).
 
+### Separate bibliography for R packages
+
+[Here](https://github.com/Pakillo/grateful/tree/master/Rmd_Quarto/separate_bibliographies)
+are example
+[Quarto](https://github.com/Pakillo/grateful/blob/master/Rmd_Quarto/separate_bibliographies/grateful-Quarto-separatebib.qmd)
+and
+[Rmarkdown](https://github.com/Pakillo/grateful/blob/master/Rmd_Quarto/separate_bibliographies/grateful-Rmarkdown-separatebib.Rmd)
+documents showing how to generate a separate bibliography for R packages
+(different from the main bibliography). This requires installing the
+[`multibib`](https://github.com/pandoc-ext/multibib) extension first.
+
 ### Citing ‘grateful’
 
 ``` r
 citation("grateful")
 To cite package 'grateful' in publications use:
 
-  Rodriguez-Sanchez F, Jackson C (2023). _grateful: Facilitate citation
+  Rodriguez-Sanchez F, Jackson C (2024). _grateful: Facilitate citation
   of R packages_. <https://pakillo.github.io/grateful/>.
 
 A BibTeX entry for LaTeX users is
 
   @Manual{,
-    title = {grateful: Facilitate citation of R packages},
+    title = {grateful: Facilitate citation of {R} packages},
     author = {Francisco Rodriguez-Sanchez and Connor P. Jackson},
-    year = {2023},
+    year = {2024},
     url = {https://pakillo.github.io/grateful/},
   }
 ```
