@@ -15,6 +15,7 @@
 #   pkgs <- installed.packages()[, "Package"]
 #
 #   info <- get_pkgs_info(pkgs, out.dir = ".", cite.tidyverse = FALSE)
+#   info
 #
 #   stopifnot(nrow(info) == length(pkgs))
 #   unname(pkgs[which(! pkgs %in% info$pkg)])
@@ -22,6 +23,7 @@
 #   tabla <- cite_packages(output = "table", out.dir = ".", pkgs = pkgs,
 #                          include.RStudio = FALSE, cite.tidyverse = FALSE)
 #   stopifnot(nrow(tabla) == length(pkgs))
+#   tabla
 #
 #   ### slow ###
 #   tabla <- cite_packages(output = "table", out.dir = ".", pkgs = pkgs,
