@@ -1,21 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# grateful: Facilitate citation of R packages
+# grateful: Facilitate citation of R packages <a href="https://pakillo.github.io/grateful/"><img src="man/figures/logo.png" align="right" height="120" alt="grateful website" /></a>
 
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/grateful)](https://cran.r-project.org/package=grateful)
 ![](https://img.shields.io/github/r-package/v/Pakillo/grateful)
-<a href="https://diffify.com/R/grateful" target="_blank"><img src="https://diffify.com/diffify-badge.svg" alt="The diffify page for the R package grateful" style="width: 100px; max-width: 100%;"></a>
+[![r-universe
+version](https://pakillo.r-universe.dev/grateful/badges/version)](https://pakillo.r-universe.dev/grateful)
+[![r-universe
+status](https://pakillo.r-universe.dev/grateful/badges/checks)](https://pakillo.r-universe.dev/grateful)
 [![R-CMD-check](https://github.com/Pakillo/grateful/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pakillo/grateful/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/Pakillo/grateful/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Pakillo/grateful?branch=master)
+coverage](https://codecov.io/gh/Pakillo/grateful/graph/badge.svg)](https://app.codecov.io/gh/Pakillo/grateful)
+<a href="https://diffify.com/R/grateful" target="_blank"><img src="https://diffify.com/diffify-badge.svg" alt="The diffify page for the R package grateful" style="width: 100px; max-width: 100%;"></a>
 [![](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/grateful)](https://cran.r-project.org/package=grateful)
+[![](https://cranlogs.r-pkg.org/badges/grateful)](https://cran.r-project.org/package=grateful)
 <!-- 
 [![HitCount since 2024-06-05](https://hits.dwyl.com/Pakillo/grateful.svg?style=flat-square)](https://hits.dwyl.com/Pakillo/grateful)
 [![HitCount since 2024-06-05](https://hits.dwyl.com/Pakillo/grateful.svg?style=flat-square&show=unique)](https://hits.dwyl.com/Pakillo/grateful)
@@ -179,17 +184,18 @@ Use `scan_packages`
 ``` r
 scan_packages()
          pkg version
-1     badger   0.2.4
-2       base   4.5.0
-3      knitr    1.50
-4       mgcv   1.9.3
-5    pkgdown   2.1.1
-6    remotes   2.5.0
-7       renv   1.1.4
-8  rmarkdown    2.29
-9   testthat   3.2.3
-10 tidyverse   2.0.0
-11    visreg   2.7.0
+1     badger   0.2.5
+2       base   4.5.1
+3       desc   1.4.3
+4      knitr    1.50
+5       mgcv   1.9.3
+6    pkgdown   2.1.3
+7    remotes   2.5.0
+8       renv   1.1.5
+9  rmarkdown    2.29
+10  testthat   3.2.3
+11 tidyverse   2.0.0
+12    visreg   2.7.0
 ```
 
 ### Producing a BibTeX file with package references
@@ -206,7 +212,7 @@ If you want to get the BibTeX references for a few specific packages:
 get_pkgs_info(pkgs = c("remotes", "renv"), out.dir = getwd())
 #>       pkg version citekeys
 #> 1 remotes   2.5.0  remotes
-#> 2    renv   1.1.4     renv
+#> 2    renv   1.1.5     renv
 ```
 
 ### Using grateful with the tidyverse
@@ -349,21 +355,23 @@ for unused packages before citing them.
 
 ### Error: there is no package called…
 
-If getting an error like “Error in (function (pkg, lib.loc = NULL):
-there is no package called…”, that means that some of your scripts is
-loading a package that is no longer available in your computer, so
-{grateful} cannot grab its citation. To fix this, there are several
-options. First, you could omit that package (or those packages, if more
-than one) from {grateful} citations using
-`cite_packages(omit = c("package1", "package2")`. Or you could set a
-`.renvignore` file to ignore particular files or folders (see
-instructions
+If getting an error like
+`Error in (function (pkg, lib.loc = NULL): there is no package called...`,
+that means that some of your scripts is loading a package that is no
+longer available in your computer, so {grateful} cannot grab its
+citation. To fix this, there are several options. First, you could omit
+that package (or those packages, if more than one) from {grateful}
+citations using `cite_packages(omit = c("package1", "package2")`.
+Second, you could set a `.renvignore` file to ignore particular files or
+folders (see instructions
 [here](https://rstudio.github.io/renv/reference/dependencies.html#ignoring-files)).
-Alternatively, try [checking if that package is still
+Third, try [checking if that package is still
 needed](https://pakillo.github.io/grateful/index.html#removing-unused-packages)
 for your project and you want to cite it; otherwise remove or comment
 that line where the package is loaded. If you still use and want to cite
-that package, install it, and then run `cite_packages` again.
+that package, install it, and then run `cite_packages` again. Finally,
+you could use the argument `skip.missing = TRUE` to skip those missing
+packages from the citation list.
 
 ### Projects with large number of packages or files
 
@@ -372,6 +380,11 @@ a warning. Use `options(renv.config.dependencies.limit = 10000)` to
 overcome the warning and scan the project for all packages used.
 Alternatively, use `.renvignore` to ignore certain files or folders (see
 `renv`
+[help](https://rstudio.github.io/renv/reference/dependencies.html#ignoring-files)).
+
+### Ignoring folders or files
+
+Use a `.renvignore` file to ignore certain files or folders (see `renv`
 [help](https://rstudio.github.io/renv/reference/dependencies.html#ignoring-files)).
 
 ### Separate bibliography for R packages
@@ -385,13 +398,77 @@ documents showing how to generate a separate bibliography for R packages
 (different from the main bibliography). This requires installing the
 [`multibib`](https://github.com/pandoc-ext/multibib) extension first.
 
+### Citing the dependencies of an R package
+
+To cite the dependencies of an R package as stated in its DESCRIPTION
+file, use `pkgs = c("Depends", "Imports", "Suggests", "LinkingTo")` or a
+combination of them to obtain the desired type of dependencies.
+
+For example, these are {grateful} package ‘Imports’ and ‘Suggests’:
+
+``` r
+cite_packages(output = "table", out.dir = ".", pkgs = c("Imports", "Suggests"))
+#>      Package  Version                                       Citation
+#> 1       curl     <NA>                                          @curl
+#> 2       desc     <NA>                                          @desc
+#> 3      knitr     <NA>             @knitr2014; @knitr2015; @knitr2025
+#> 4    remotes     <NA>                                       @remotes
+#> 5       renv     <NA>                                          @renv
+#> 6  rmarkdown     <NA> @rmarkdown2018; @rmarkdown2020; @rmarkdown2024
+#> 7 rstudioapi     <NA>                                    @rstudioapi
+#> 8   testthat >= 3.0.0                                      @testthat
+#> 9      utils     <NA>                                         @utils
+```
+
+To also include the dependencies from those packages, use
+`dependencies = TRUE`:
+
+``` r
+out <- cite_packages(output = "table", out.dir = ".", pkgs = c("Imports", "Suggests"), 
+                     dependencies = TRUE)
+head(out)
+#>     Package Version   Citation
+#> 1 base64enc    <NA> @base64enc
+#> 2      brio    <NA>      @brio
+#> 3     bslib    <NA>     @bslib
+#> 4    cachem    <NA>    @cachem
+#> 5     callr    <NA>     @callr
+#> 6       cli    <NA>       @cli
+```
+
+### Changing the language of the citation paragraph
+
+`cite_packages` includes a few arguments (`text.start`, `text.pkgs` and
+`text.RStudio`) to allow the user to customise the language of the
+citation paragraph.
+
+For example, to produce a citation paragraph in Spanish:
+
+``` r
+cite_packages(output = "paragraph", out.dir = ".", 
+              text.start = "Para desarrollar este trabajo se utilizó",
+              text.pkgs = "y los siguientes paquetes")
+```
+
+`"Para desarrollar este trabajo se utilizó R version 4.5.1 [@base] y los siguientes paquetes: badger v. 0.2.5 [@badger], desc v. 1.4.3 [@desc], knitr v. 1.50 [@knitr2014; @knitr2015; @knitr2025], mgcv v. 1.9.3 [@mgcv2003; @mgcv2004; @mgcv2011; @mgcv2016; @mgcv2017], pkgdown v. 2.1.3 [@pkgdown], remotes v. 2.5.0 [@remotes], renv v. 1.1.5 [@renv], rmarkdown v. 2.29 [@rmarkdown2018; @rmarkdown2020; @rmarkdown2024], testthat v. 3.2.3 [@testthat], tidyverse v. 2.0.0 [@tidyverse], visreg v. 2.7.0 [@visreg]."`
+
+Or in German:
+
+``` r
+cite_packages(output = "paragraph", out.dir = ".", 
+              text.start = "Wir verwendeten die",
+              text.pkgs = "und die folgenden R-Pakete")
+```
+
+`"Wir verwendeten die R version 4.5.1 [@base] und die folgenden R-Pakete: badger v. 0.2.5 [@badger], desc v. 1.4.3 [@desc], knitr v. 1.50 [@knitr2014; @knitr2015; @knitr2025], mgcv v. 1.9.3 [@mgcv2003; @mgcv2004; @mgcv2011; @mgcv2016; @mgcv2017], pkgdown v. 2.1.3 [@pkgdown], remotes v. 2.5.0 [@remotes], renv v. 1.1.5 [@renv], rmarkdown v. 2.29 [@rmarkdown2018; @rmarkdown2020; @rmarkdown2024], testthat v. 3.2.3 [@testthat], tidyverse v. 2.0.0 [@tidyverse], visreg v. 2.7.0 [@visreg]."`
+
 ### Citing ‘grateful’
 
 ``` r
 citation("grateful")
 To cite package 'grateful' in publications use:
 
-  Rodriguez-Sanchez F, Jackson C (2024). _grateful: Facilitate citation
+  Rodriguez-Sanchez F, Jackson C (2025). _grateful: Facilitate citation
   of R packages_. <https://pakillo.github.io/grateful/>.
 
 A BibTeX entry for LaTeX users is
@@ -399,7 +476,7 @@ A BibTeX entry for LaTeX users is
   @Manual{,
     title = {grateful: Facilitate citation of {R} packages},
     author = {Francisco Rodriguez-Sanchez and Connor P. Jackson},
-    year = {2024},
+    year = {2025},
     url = {https://pakillo.github.io/grateful/},
   }
 ```
