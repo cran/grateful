@@ -1,6 +1,6 @@
 Package: grateful
 Title: Facilitate Citation of R Packages
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Francisco", "Rodriguez-Sanchez", 
             email = "f.rodriguez.sanc@gmail.com", 
@@ -24,9 +24,9 @@ Imports: desc, knitr, remotes, renv, rmarkdown, rstudioapi, utils
 Suggests: curl, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.1.1
 NeedsCompilation: no
-Packaged: 2025-09-04 14:28:18 UTC; frs
+Packaged: 2026-11-09 11:18:17 UTC; frs
 Author: Francisco Rodriguez-Sanchez [aut, cre, cph] (ORCID:
     <https://orcid.org/0000-0002-7981-1599>),
   Connor P. Jackson [aut] (ORCID:
@@ -35,4 +35,4 @@ Author: Francisco Rodriguez-Sanchez [aut, cre, cph] (ORCID:
   James M. Clawson [ctb]
 Maintainer: Francisco Rodriguez-Sanchez <f.rodriguez.sanc@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-09-04 15:00:02 UTC
+Date/Publication: 2026-11-09 11:40:02 UTC

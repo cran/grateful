@@ -96,8 +96,9 @@ test_that("cite_packages returns correct paragraph", {
                         pkgs = c("Depends", "Imports", "Suggests"),
                         desc.path = desc,
                         out.dir = tempdir())
-  expect_identical(para,
-                   structure("We used R v. >= 3.0.0 [@base] and the following R packages: curl [@curl], desc [@desc], knitr [@knitr2014; @knitr2015; @knitr2025], remotes [@remotes], renv [@renv], rmarkdown [@rmarkdown2018; @rmarkdown2020; @rmarkdown2024], rstudioapi [@rstudioapi], testthat v. >= 3.0.0 [@testthat], utils [@utils].", class = "knit_asis", knit_cacheable = NA))
+
+  expect_identical(gsub("\\s\\[.*?\\]", "", para),  # remove citation keys, which may change
+                   structure("We used R v. >= 3.0.0 and the following R packages: curl, desc, knitr, remotes, renv, rmarkdown, rstudioapi, testthat v. >= 3.0.0, utils.", class = "knit_asis", knit_cacheable = NA))
 
 
 })
@@ -172,7 +173,49 @@ test_that("cite_packages returns correct Rmd", {
                  "## Package citations",
                  ""))
 
+})
 
 
+test_that("only R is cited if there are no extra packages", {
+
+  para <- cite_packages(output = "paragraph",
+                        pkgs = c("base"),
+                        out.dir = tempdir())
+
+  expect_equal(para,
+               structure(paste0("We used R v. ",
+                                R.version$major, ".", R.version$minor, " [@base]."),
+                         class = "knit_asis", knit_cacheable = NA))
+
+})
+
+
+
+test_that("citation paragraph is well formatted with base R packages included", {
+
+  para <- cite_packages(output = "paragraph",
+                        pkgs = c("base", "grid", "grateful", "splines"),
+                        out.dir = tempdir())
+
+  expect_equal(para,
+               structure(paste0("We used R v. ", R.version$major, ".", R.version$minor, " [@base] ",
+                                "and the following R packages: ",
+                                "grateful v. ", utils::packageVersion("grateful"), " [@grateful], ",
+                                "grid v. ", utils::packageVersion("grid"), " [@base], ",
+                                "splines v. ", utils::packageVersion("splines"), " [@base]."),
+                         class = "knit_asis", knit_cacheable = NA))
+
+
+  ## without R base
+  para <- cite_packages(output = "paragraph",
+                        pkgs = c("splines", "grid", "grateful"),
+                        out.dir = tempdir())
+
+  expect_equal(para,
+               structure(paste0("We used the following R packages: ",
+                                "grateful v. ", utils::packageVersion("grateful"), " [@grateful], ",
+                                "grid v. ", utils::packageVersion("grid"), " [@base], ",
+                                "splines v. ", utils::packageVersion("splines"), " [@base]."),
+                         class = "knit_asis", knit_cacheable = NA))
 
 })
